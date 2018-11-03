@@ -19,7 +19,7 @@ class Results extends React.Component {
     petfinder.pet
       .find({
         output: "full",
-        location: "Mountain View, CA"
+        location: "San Jose, CA"
       })
       .then(data => {
         let pets;
