@@ -4,20 +4,20 @@ class Carousel extends React.Component {
   state = {
     photos: [],
     active: 0
-  }
-  static getDerivedStateFromProps({ media }){
+  };
+  static getDerivedStateFromProps({ media }) {
     let photos = [];
-    if(media && media.photos && media.photos.photo) {
-      photos = media.photos.photo.filter(photo => photo['@size'] === 'pn')
+    if (media && media.photos && media.photos.photo) {
+      photos = media.photos.photo.filter(photo => photo["@size"] === "pn");
     }
     return { photos };
   }
-  handleIndexClick = (event) => {
+  handleIndexClick = event => {
     this.setState({
       active: +event.target.dataset.index
-    })
-  }
-  render(){
+    });
+  };
+  render() {
     const { photos, active } = this.state;
 
     return (
@@ -26,18 +26,18 @@ class Carousel extends React.Component {
         <div className="carousel-smaller">
           {photos.map((photo, index) => (
             /* eslint-disable-next-line */
-            <img 
-            onClick={this.handleIndexClick}
-            key={photo.value} 
-            src={photo.value} 
-            data-index={index}
-            className={index === active ? 'active' : ''}
-            alt="animal thumbnail" 
+            <img
+              onClick={this.handleIndexClick}
+              key={photo.value}
+              src={photo.value}
+              data-index={index}
+              className={index === active ? "active" : ""}
+              alt="animal thumbnail"
             />
           ))}
         </div>
       </div>
-    )
+    );
   }
 }
 
