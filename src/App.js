@@ -2,10 +2,10 @@ import React from "react";
 import { render } from "react-dom";
 import { Router, Link } from "@reach/router";
 import pf from "petfinder-client";
-import { Provider } from "./SearchContext";
 import Results from "./Results";
 import Details from "./Details";
 import SearchParams from "./SearchParams";
+import { Provider } from "./SearchContext";
 
 const petfinder = pf({
   key: process.env.API_KEY,
@@ -15,6 +15,7 @@ const petfinder = pf({
 class App extends React.Component {
   constructor(props) {
     super(props);
+    
     this.state = {
       location: "San Jose, CA",
       animal: "",
@@ -37,7 +38,7 @@ class App extends React.Component {
     this.setState(
       {
         animal: event.target.value,
-        breed: ""
+        // breed: ""
       },
       this.getBreeds
     );
@@ -52,19 +53,22 @@ class App extends React.Component {
   // not doing this an arrow function as it's not necessary
   getBreeds() {
     if (this.state.animal) {
-      petfinder.breed.list({ animal: this.state.animal }).then(data => {
-        if (
-          data.petfinder &&
-          data.petfinder.breeds &&
-          Array.isArray(data.petfinder.breeds.breed)
-        ) {
-          this.setState({
-            breeds: data.petfinder.breeds.breed
-          });
-        } else {
-          this.setState({ breeds: [] });
-        }
-      });
+      petfinder.breed
+        .list({ animal: this.state.animal })
+        .then(data => {
+          if (
+            data.petfinder &&
+            data.petfinder.breeds &&
+            Array.isArray(data.petfinder.breeds.breed)
+          ) {
+            this.setState({
+              breeds: data.petfinder.breeds.breed
+            });
+          } else {
+            this.setState({ breeds: [] });
+          }
+        })
+        .catch(console.error);
     } else {
       this.setState({ breeds: [] });
     }
@@ -76,12 +80,13 @@ class App extends React.Component {
         <header>
           <Link to="/">Adopt Me!</Link>
         </header>
-        <Provider value={this.state} />
-        <Router>
-          <Results path="/" />
-          <Details path="/details/:id" />
-          <SearchParams path="/search-params" />
-        </Router>
+        <Provider value={this.state}>
+          <Router>
+            <Results path="/" />
+            <Details path="/details/:id" />
+            <SearchParams path="/search-params" />
+          </Router>
+        </Provider>
       </div>
     );
   }
