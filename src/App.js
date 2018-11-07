@@ -15,7 +15,7 @@ const petfinder = pf({
 class App extends React.Component {
   constructor(props) {
     super(props);
-    
+
     this.state = {
       location: "San Jose, CA",
       animal: "",
@@ -37,7 +37,7 @@ class App extends React.Component {
   handleAnimalChange = event => {
     this.setState(
       {
-        animal: event.target.value,
+        animal: event.target.value
         // breed: ""
       },
       this.getBreeds
@@ -53,21 +53,19 @@ class App extends React.Component {
   // not doing this an arrow function as it's not necessary
   getBreeds() {
     if (this.state.animal) {
-      petfinder.breed
-        .list({ animal: this.state.animal })
-        .then(data => {
-          if (
-            data.petfinder &&
-            data.petfinder.breeds &&
-            Array.isArray(data.petfinder.breeds.breed)
-          ) {
-            this.setState({
-              breeds: data.petfinder.breeds.breed
-            });
-          } else {
-            this.setState({ breeds: [] });
-          }
-        })
+      petfinder.breed.list({ animal: this.state.animal }).then(data => {
+        if (
+          data.petfinder &&
+          data.petfinder.breeds &&
+          Array.isArray(data.petfinder.breeds.breed)
+        ) {
+          this.setState({
+            breeds: data.petfinder.breeds.breed
+          });
+        } else {
+          this.setState({ breeds: [] });
+        }
+      });
     } else {
       this.setState({ breeds: [] });
     }

@@ -46,7 +46,7 @@ class Results extends React.Component {
           pets
         });
       });
-  }
+  };
   render() {
     return (
       <div className="search">
@@ -78,7 +78,7 @@ class Results extends React.Component {
 export default function ResultsWithContext(props) {
   return (
     <Consumer>
-      {context => <Results {... props} searchParams={context} />}
+      {context => <Results {...props} searchParams={context} />}
     </Consumer>
-  )
-};
+  );
+}

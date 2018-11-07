@@ -17,8 +17,8 @@ class Details extends React.Component {
   toggleModal = () => {
     this.setState({
       showModal: !this.state.showModal
-    })
-  }
+    });
+  };
   componentDidMount() {
     petfinder.pet
       .get({
@@ -51,16 +51,16 @@ class Details extends React.Component {
     if (this.state.loading) {
       return <h1>Loading...</h1>;
     }
-    const { 
-      name, 
-      animal, 
-      breed, 
-      location, 
-      description, 
-      media, 
-      showModal 
+    const {
+      name,
+      animal,
+      breed,
+      location,
+      description,
+      media,
+      showModal
     } = this.state;
-    
+
     return (
       <div className="details">
         <Carousel media={media} />
@@ -71,17 +71,15 @@ class Details extends React.Component {
           </h2>
           <button onClick={this.toggleModal}>Adopt {name}</button>
           <p>{description}</p>
-          {
-            showModal ? (
-              <Modal>
-                <h1>Would you like to adopt {name} ?</h1>
-                <div className="buttons">
-                  <button onClick={this.toggleModal}>Yes</button>
-                  <button onClick={this.toggleModal}>Definetely Yes</button>
-                </div>
-              </Modal>
-            ) : null 
-          }
+          {showModal ? (
+            <Modal>
+              <h1>Would you like to adopt {name} ?</h1>
+              <div className="buttons">
+                <button onClick={this.toggleModal}>Yes</button>
+                <button onClick={this.toggleModal}>Definetely Yes</button>
+              </div>
+            </Modal>
+          ) : null}
         </div>
       </div>
     );
